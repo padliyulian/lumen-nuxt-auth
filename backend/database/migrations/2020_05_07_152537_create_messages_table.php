@@ -20,6 +20,14 @@ class CreateMessagesTable extends Migration
             $table->string('message')->nullable();
             $table->timestamps();
         });
+
+        DB::table('messages')->insert([
+            ['from' => 6, 'to' => 3, 'message' => 'siang pak, sppd ke sbp sudah dibuat', 'created_at' => new DateTime()],
+            ['from' => 3, 'to' => 6, 'message' => 'ok, nanti saya approve', 'created_at' => new DateTime()],
+            ['from' => 6, 'to' => 3, 'message' => 'baik.', 'created_at' => new DateTime()],
+            ['from' => 6, 'to' => 7, 'message' => 'wan senin beragkat nya', 'created_at' => new DateTime()],
+            ['from' => 7, 'to' => 6, 'message' => 'ok kak', 'created_at' => new DateTime()],
+        ]);
     }
 
     /**

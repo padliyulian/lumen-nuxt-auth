@@ -66,6 +66,9 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'api/v1'], function(){
     Route::group(['namespace' => 'chat'], function(){
         // user list
         Route::get('/karyawan/chat/user-list', 'ChatController@userList');
+
+        // chat with
+        Route::get('/karyawan/chat/user/{user}', 'ChatController@chatWith');
     });
 
     // Route::get('/user', 'UserController@index');
