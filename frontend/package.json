@@ -1,0 +1,31 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "esppd",
+  "author": "padli yulian",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/auth": "^4.9.0",
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/moment": "^1.6.0",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "admin-lte": "^3.0.4",
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.4.1",
+    "node-sass": "^4.13.1",
+    "object-to-formdata": "^3.0.6",
+    "popper.js": "^1.16.1",
+    "sass-loader": "^8.0.2",
+    "sweetalert2": "^9.10.10",
+    "vform": "^1.0.1"
+  }
+}

@@ -1,0 +1,16 @@
+// bootstrap 4
+@import '~bootstrap/scss/bootstrap';
+
+// Font Awesome
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+// admin-lte 2
+@import '../../node_modules/admin-lte/build/scss/AdminLTE.scss';
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
