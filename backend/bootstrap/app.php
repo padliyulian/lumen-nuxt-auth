@@ -106,6 +106,10 @@ $app->register(Spatie\Permission\PermissionServiceProvider::class);
 class_alias('Barryvdh\Snappy\Facades\SnappyPdf', 'PDF');
 $app->register(Barryvdh\Snappy\LumenServiceProvider::class);
 
+// pusher
+// $app->register(App\Providers\BroadcastServiceProvider::class);
+$app->configure('broadcast');
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

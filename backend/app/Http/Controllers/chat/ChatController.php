@@ -53,4 +53,23 @@ class ChatController extends Controller
 
         // return $messages;
     }
+
+    public function chatSend(Request $request)
+    {
+        $this->validate($request, [
+            'to' => 'required',
+            'message' => 'required|string|max:600',
+        ]);
+
+        $user = User::findOrFail($request->to);
+
+        $message = new Message;
+        $message->from = $this->user()->id;
+        $message->to = $user->id;
+        $message->message = $request->message;
+        
+        if ($message->save()) {
+            return $message;
+        }
+    }
 }
