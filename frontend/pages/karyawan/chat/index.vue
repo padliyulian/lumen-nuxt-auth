@@ -140,15 +140,25 @@
                         .then(res => {
                             this.resetForm()
                             this.getUsers()
+                            this.messages.push(res.data)
                         })
                         .catch(err => console.log(err))
                 }
             },
 
             resetForm() {
-                this.form.clear()
-                this.form.reset()
+                this.form.message = ''
             }
         }
     }
 </script>
+
+
+<style lang="scss">
+    .chat {
+        &__box {
+            height: 300px;
+            overflow: auto;
+        }
+    }
+</style>
