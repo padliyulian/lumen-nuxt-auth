@@ -40,6 +40,8 @@ export default {
   */
   plugins: [
     { src: '@plugins/bootstrap.js', ssr: false },
+    { src: '@plugins/pusher.js', ssr: false },
+
   ],
   /*
   ** Nuxt.js dev-modules

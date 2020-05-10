@@ -87,7 +87,7 @@
             return {
                 id: 0,
                 users: [],
-                messages: [],
+                // messages: [],
 
                 form: new Form({
                     name: '',
@@ -104,6 +104,12 @@
         },
 
         mounted() {
+        },
+
+        computed: {
+            messages() {
+                return this.$store.getters.getMessage
+            },
         },
 
         methods: {
@@ -124,7 +130,7 @@
                 this.form.name = user.name
                 this.$axios.get(`${process.env.apiUrl}/karyawan/chat/user/${user.id}`)
                     .then(res => {
-                        this.messages = res.data
+                        this.$store.commit('setMessage', res.data)
                         this.getUsers()
                     })
                     .catch(err => console.log(err))
@@ -140,7 +146,8 @@
                         .then(res => {
                             this.resetForm()
                             this.getUsers()
-                            this.messages.push(res.data)
+                            // this.messages.push(res.data)
+                            this.$store.commit('addMessage', res.data)
                         })
                         .catch(err => console.log(err))
                 }
