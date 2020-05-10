@@ -13,23 +13,26 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h5>Message list with {{form.name}}</h5>
-                                        <div class="chat__box card px-4 py-4">
+                                        <div id="chat__box" class="chat__box card px-4 py-4">
                                             <template v-for="message in messages">
                                                 <template v-if="message.from === id">
-                                                    <div :key="message.id" class="text-right">
+                                                    <div :key="message.id" class="text-right mb-2">
                                                         <span class="text-info">
                                                             <span class="d-block">{{message.message}}</span>
-                                                            <span class="d-block">{{$moment(message.created_at).format('D/MM/YYYY H:m')}}</span>
+                                                            <span class="d-block font-italic">{{$moment(message.created_at).format('D/MM/YYYY H:m')}}</span>
                                                         </span>
                                                     </div>
                                                 </template>
                                                 <template v-else>
-                                                    <div :key="message.id" class="text-left">
-                                                        <span class="text-secondary">
-                                                            <span class="d-block">{{message.message}}</span>
-                                                            <span class="d-block">{{$moment(message.created_at).format('D/MM/YYYY H:m')}}</span>
-                                                        </span>
-                                                    </div>
+                                                    <template v-if="message.to === id">
+                                                        <div :key="message.id" class="text-left mb-2">
+                                                            <span class="text-secondary">
+                                                                <span class="d-block">From : {{messageFrom(message.from)}}</span>
+                                                                <span class="d-block">Message : {{message.message}}</span>
+                                                                <span class="d-block font-italic">{{$moment(message.created_at).format('D/MM/YYYY H:m')}}</span>
+                                                            </span>
+                                                        </div>
+                                                    </template>    
                                                 </template>
                                             </template>
                                         </div>
@@ -48,13 +51,13 @@
                                     <div class="col-lg-2"></div>
                                     <div class="col-lg-4">
                                         <h5>User List</h5>
-                                        <template v-for="user in users">
-                                            <div :key="user.id" @click.prevent="chatWith(user)">
-                                                <i v-if="user.isLogin === '0'" class="fas fa-circle text-secondary"></i> 
+                                         <template v-for="user in users">
+                                             <a :key="user.id" @click.prevent="chatWith(user)" class="nav-link text-secondary pb-0" href="#">
+                                                 <i v-if="user.isLogin === '0'" class="fas fa-circle text-secondary"></i> 
                                                 <i v-else class="fas fa-circle text-success"></i> 
                                                 <span>{{user.name}}</span>
-                                            </div>
-                                        </template>
+                                            </a>
+                                        </template>  
                                     </div>
                                 </div>
                             </div>
@@ -104,6 +107,7 @@
         },
 
         mounted() {
+            setInterval(() => this.updateScroll(), 1000)
         },
 
         computed: {
@@ -131,9 +135,19 @@
                 this.$axios.get(`${process.env.apiUrl}/karyawan/chat/user/${user.id}`)
                     .then(res => {
                         this.$store.commit('setMessage', res.data)
-                        this.getUsers()
+                        this.updateScroll()
                     })
                     .catch(err => console.log(err))
+            },
+
+            messageFrom(id) {
+                let nama = ''
+                this.users.filter(user => {
+                    if (user.id === id) {
+                        nama = user.name
+                    }
+                })
+                return nama
             },
 
             sendMessage() {
@@ -145,9 +159,7 @@
                     })
                         .then(res => {
                             this.resetForm()
-                            // this.getUsers()
-                            // // this.messages.push(res.data)
-                            // this.$store.commit('addMessage', res.data)
+                            this.updateScroll()
                         })
                         .catch(err => console.log(err))
                 }
@@ -155,6 +167,12 @@
 
             resetForm() {
                 this.form.message = ''
+            },
+
+            updateScroll(){
+                let element = document.getElementById('chat__box')
+                // element.scrollDown = element.scrollHeight
+                setTimeout(() => element.scrollTo(0,element.scrollHeight), 300)
             }
         }
     }
