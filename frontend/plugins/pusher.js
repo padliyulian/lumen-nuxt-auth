@@ -9,6 +9,6 @@ export default ({ store }) => {
 const channel = socket.subscribe('chat')
     channel.bind('SendMessage', function (data) {
         // data dari pusher dimasukan ke dalam state di vuex melalu mutation setNotif
-        store.commit('addMessage', data)
+        store.commit('addMessage', data.message)
     })
 }

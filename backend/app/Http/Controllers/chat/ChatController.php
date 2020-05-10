@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Message;
+use App\Events\MyEvent;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -69,6 +70,7 @@ class ChatController extends Controller
         $message->message = $request->message;
         
         if ($message->save()) {
+            event(new MyEvent($message));
             return $message;
         }
     }

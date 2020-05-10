@@ -145,9 +145,9 @@
                     })
                         .then(res => {
                             this.resetForm()
-                            this.getUsers()
-                            // this.messages.push(res.data)
-                            this.$store.commit('addMessage', res.data)
+                            // this.getUsers()
+                            // // this.messages.push(res.data)
+                            // this.$store.commit('addMessage', res.data)
                         })
                         .catch(err => console.log(err))
                 }
