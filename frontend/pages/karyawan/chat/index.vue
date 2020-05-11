@@ -11,7 +11,22 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-md-4">
+                                        <h5>User List</h5>
+                                        <div class="chat__ulist card">
+                                            <template v-for="user in users">
+                                                <template v-if="user.id != id">
+                                                    <a :key="user.id" @click.prevent="chatWith(user)" class="nav-link text-secondary pb-0" href="#">
+                                                        <i v-if="user.isLogin === '0'" class="fas fa-circle text-secondary"></i> 
+                                                        <i v-else class="fas fa-circle text-success"></i> 
+                                                        <span>{{user.name}}</span>
+                                                        <span v-if="user.messages_count" class="badge badge-info">{{user.messages_count}}</span>
+                                                    </a>
+                                                </template>    
+                                            </template>  
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-6">
                                         <h5>Message list with {{form.name}}</h5>
                                         <div id="chat__box" class="chat__box card px-4 py-4">
                                             <template v-for="message in messages">
@@ -25,13 +40,15 @@
                                                 </template>
                                                 <template v-else>
                                                     <template v-if="message.to === id">
-                                                        <div :key="message.id" class="text-left mb-2">
-                                                            <span class="text-secondary">
-                                                                <span class="d-block">From : {{messageFrom(message.from)}}</span>
-                                                                <span class="d-block">Message : {{message.message}}</span>
-                                                                <span class="d-block font-italic">{{$moment(message.created_at).format('D/MM/YYYY H:m')}}</span>
-                                                            </span>
-                                                        </div>
+                                                        <template v-if="message.from === form.to">
+                                                            <div :key="message.id" class="text-left mb-2">
+                                                                <span class="text-secondary">
+                                                                    <span class="d-block">From : {{messageFrom(message.from)}}</span>
+                                                                    <span class="d-block">Message : {{message.message}}</span>
+                                                                    <span class="d-block font-italic">{{$moment(message.created_at).format('D/MM/YYYY H:m')}}</span>
+                                                                </span>
+                                                            </div>
+                                                        </template>    
                                                     </template>    
                                                 </template>
                                             </template>
@@ -48,18 +65,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2"></div>
-                                    <div class="col-lg-4">
-                                        <h5>User List</h5>
-                                         <template v-for="user in users">
-                                             <a :key="user.id" @click.prevent="chatWith(user)" class="nav-link text-secondary pb-0" href="#">
-                                                <i v-if="user.isLogin === '0'" class="fas fa-circle text-secondary"></i> 
-                                                <i v-else class="fas fa-circle text-success"></i> 
-                                                <span>{{user.name}}</span>
-                                                <span v-if="user.messages_count" class="badge badge-info">{{user.messages_count}}</span>
-                                            </a>
-                                        </template>  
-                                    </div>
+                                    <div class="col-md-2"></div>
                                 </div>
                             </div>
                         </div>
@@ -89,8 +95,8 @@
 
         data() {
             return {
-                id: 0,
-                users: [],
+                id: null,
+                // users: [],
                 // messages: [],
 
                 form: new Form({
@@ -115,6 +121,10 @@
             messages() {
                 return this.$store.getters.getMessage
             },
+
+            users() {
+                return this.$store.getters.getUser
+            },
         },
 
         methods: {
@@ -125,7 +135,8 @@
             getUsers() {
                 this.$axios.get(`${process.env.apiUrl}/karyawan/chat/user-list`)
                     .then(res => {
-                        this.users = res.data.filter(user => user.id != this.id)
+                        this.$store.commit('setUser', res.data)
+                        // this.users = res.data.filter(user => user.id != this.id)
                     })
                     .catch(err => console.log(err))
             },
@@ -184,7 +195,7 @@
 
 <style lang="scss">
     .chat {
-        &__box {
+        &__box, &__ulist {
             height: 300px;
             overflow: auto;
         }
