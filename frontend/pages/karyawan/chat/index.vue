@@ -53,9 +53,10 @@
                                         <h5>User List</h5>
                                          <template v-for="user in users">
                                              <a :key="user.id" @click.prevent="chatWith(user)" class="nav-link text-secondary pb-0" href="#">
-                                                 <i v-if="user.isLogin === '0'" class="fas fa-circle text-secondary"></i> 
+                                                <i v-if="user.isLogin === '0'" class="fas fa-circle text-secondary"></i> 
                                                 <i v-else class="fas fa-circle text-success"></i> 
                                                 <span>{{user.name}}</span>
+                                                <span v-if="user.messages_count" class="badge badge-info">{{user.messages_count}}</span>
                                             </a>
                                         </template>  
                                     </div>
@@ -135,6 +136,7 @@
                 this.$axios.get(`${process.env.apiUrl}/karyawan/chat/user/${user.id}`)
                     .then(res => {
                         this.$store.commit('setMessage', res.data)
+                        this.getUsers()
                         this.updateScroll()
                     })
                     .catch(err => console.log(err))
@@ -160,6 +162,7 @@
                         .then(res => {
                             this.resetForm()
                             this.updateScroll()
+                            this.getUsers()
                         })
                         .catch(err => console.log(err))
                 }

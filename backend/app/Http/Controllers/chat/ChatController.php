@@ -27,7 +27,7 @@ class ChatController extends Controller
 
     public function userList()
     {
-        $users = User::select('id','name','avatar','isLogin')->get();
+        $users = User::select('id','name','avatar','isLogin')->withCount('messages')->get();
         return $users;
     }
 
@@ -42,6 +42,14 @@ class ChatController extends Controller
         });
 
         $data = $query->get();
+
+        // update messages status to read
+        $messages = Message::where([['to', '=', $this->user()->id], ['from', '=', $user->id]])->get();
+        foreach ($messages as $message) {
+            $message->read = '1';
+            $message->update();
+        }
+
         return $data;
 
         // $messages = DB::table('messages')->orderBy('created_at', 'asc')->where([

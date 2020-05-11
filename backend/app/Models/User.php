@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Auth;
 
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
@@ -38,5 +39,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function karyawan()
     {
         return $this->hasOne(Karyawan::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'from')->where([['to', Auth::user()->id], ['read', '0']]);
     }
 }
