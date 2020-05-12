@@ -60,7 +60,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row e-over-auto">
                                         <div class="col-lg-12 d-flex flex-row justify-content-between">
                                             <div>
                                                 <span class="text-secondary">

@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h6>Ditugaskan Kepada :</h6>
-                            <table class="table table-sm-responsive table-striped">
+                            <table class="table table-responsive-sm table-striped">
                                 <thead>
                                     <tr>
                                         <th class="text-center">No.</th>
@@ -109,7 +109,7 @@
                             </table> 
                             <div>Demikian surat ini dibuat agar dapat dilaksanakan dengan baik.</div>     
                             <div>Hajimena, {{$moment(row.created_at).format('DD MMM YYYY')}}</div> 
-                            <div class="row mt-4">
+                            <div class="row mt-4 e-over-auto">
                                 <div class="col-6 text-center">
                                     <span class="d-block">Pemberi Tugas</span>
                                     <template v-for="karyawan in row.karyawan"> 

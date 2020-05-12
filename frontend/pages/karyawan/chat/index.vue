@@ -96,8 +96,7 @@
         data() {
             return {
                 id: null,
-                // users: [],
-                // messages: [],
+                timer: null,
 
                 form: new Form({
                     name: '',
@@ -114,7 +113,12 @@
         },
 
         mounted() {
-            setInterval(() => this.updateScroll(), 1000)
+            clearInterval(this.timer)
+            this.timer = setInterval(() => this.updateScroll(), 1000)
+        },
+
+        destroyed() {
+            clearInterval(this.timer)
         },
 
         computed: {
